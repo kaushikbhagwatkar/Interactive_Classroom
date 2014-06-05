@@ -62,7 +62,7 @@ public class AudioDoubt extends Activity implements OnClickListener {
 		}
 		status.setText("Its your turn !!!");
 		queuePos.setText("Start Speaking !!!");
-		queuePos.setOnClickListener(this);	//IF THIS PRESSED, USER CAN START SPEAKING
+		startsp.setOnClickListener(this);	//IF THIS PRESSED, USER CAN START SPEAKING
 
 	}
 

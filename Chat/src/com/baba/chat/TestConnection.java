@@ -257,7 +257,7 @@ public class TestConnection extends Activity
 						
 						
 						
-						Intent rc=new Intent("com.baba.chat.AUDIOMAINACTIVITY");
+						Intent rc=new Intent(TestConnection.this,AudioMainActivity.class);
 						startActivity(rc);
 						
 						
@@ -277,13 +277,13 @@ public class TestConnection extends Activity
 			});
 
 	}
-		/*
+		
 		
 		  @Override
 		    public void onBackPressed() {
 		       
-		        startActivity(new Intent("com.baba.chat.AUDIOMAINACTIVITY"));
-		        finish();
+		        startActivity(new Intent(TestConnection.this,AudioMainActivity.class));
+		        //finish();
 		    }
-		*/
+		
 }

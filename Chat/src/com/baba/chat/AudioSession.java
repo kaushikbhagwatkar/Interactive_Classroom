@@ -1,6 +1,7 @@
 package com.baba.chat;
 
 import static android.media.MediaRecorder.AudioSource.MIC;
+import static android.media.MediaRecorder.AudioSource.VOICE_COMMUNICATION;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -24,7 +25,7 @@ public class AudioSession {
 	private int encodingFormat=AudioFormat.ENCODING_PCM_16BIT;
 	int minBufSize=AudioRecord.getMinBufferSize(sampleRate,channelConfig,encodingFormat)+4096;
 	int bufferSize=0;
-	public String ipAddress="10.105.15.138";
+	public String ipAddress="10.105.14.122";
 	private static final String IPV4_NUM       ="([01]?\\d\\d?|2[0-4]\\d|25[0-5])";		//REGULAR EXPRESSION FOR IP NUM
 	private static final String IP_DOT         ="\\.";
 	private static final String IPV4_PATTERN   ="^"+IPV4_NUM+IP_DOT+IPV4_NUM+IP_DOT+IPV4_NUM+IP_DOT+IPV4_NUM+"$";	
@@ -32,8 +33,7 @@ public class AudioSession {
 	DatagramSocket socket,socket1, socket2, socket3;
 
 	
-	public
-	void stopStreaming(){	//TO STOP AUDIO RECORDER BY RELEASING IT
+	public void stopStreaming(){	//TO STOP AUDIO RECORDER BY RELEASING IT
 		
 		if(recorder!=null){
 		recorder.stop();
@@ -42,8 +42,9 @@ public class AudioSession {
 		}
 	}
 
-	public
-	void startStreaming(){	//START AUDIO RECORDING
+	
+	
+	public void startStreaming(){	//START AUDIO RECORDING
 		//ipAddress=getIpAddress();
 		//port=getPort();
 		//if(!isValidIPAddressAndPort(ipAddress,port)) return;	//CHECK FOR VALID IP AND PORT
@@ -60,7 +61,7 @@ public class AudioSession {
 					DatagramPacket packet;
 					final InetAddress destination=InetAddress.getByName(ipAddress);
 					//Log.e("before recorder", "about to initialize");
-					recorder=new AudioRecord(MIC,sampleRate,channelConfig,encodingFormat,minBufSize*10);	//INITIALIZE RECORDER
+					recorder=new AudioRecord(VOICE_COMMUNICATION,sampleRate,channelConfig,encodingFormat,minBufSize*10);	//INITIALIZE RECORDER
 					//test starts
 			
 					
@@ -99,8 +100,7 @@ public class AudioSession {
 */
 	
 	
-	public
-	void onRequestPress(){	//RAISE REQUEST FOR AUDIO DOUBT
+	public void onRequestPress(){	//RAISE REQUEST FOR AUDIO DOUBT
 		final byte[] request=("Raise Hand").getBytes();
 		new Thread(new Runnable(){
 			@Override
@@ -114,15 +114,10 @@ public class AudioSession {
 					//Log.e("REquest", "Ssnt");
 					while(waitingForPermission()) ;	//SEND PERMISSION
 				}
-				catch(SocketException e){
+				catch(Exception e){
 					e.printStackTrace();
 				}
-				catch(UnknownHostException e){
-					e.printStackTrace();
-				}
-				catch(IOException e){
-					e.printStackTrace();
-				}
+				
 				finally{
 					socket1.close();
 				}
@@ -130,8 +125,7 @@ public class AudioSession {
 		}).start();
 	}
 
-	private
-	boolean waitingForPermission() throws IOException{	//WAITING TO RECEIVE PERMISSION TO START AUDIO DOUBT
+	private boolean waitingForPermission() throws IOException{	//WAITING TO RECEIVE PERMISSION TO START AUDIO DOUBT
 		byte[] receiveData=new byte[8192];
 		socket2=new DatagramSocket(port);
 		
@@ -157,8 +151,7 @@ public class AudioSession {
 	public
 	void onDefaultPort(View view){portField.setText("50005");}
 */
-	public
-	void onWithdrawPress(){	//IF WITHDRAW BUTTON PRESSED DURING STREAMING
+	public void onWithdrawPress(){	//IF WITHDRAW BUTTON PRESSED DURING STREAMING
 		final byte[] request=("Withdraw").getBytes();
 		new Thread(new Runnable(){
 			@Override
@@ -172,15 +165,10 @@ public class AudioSession {
 					isRecording=false;
 					stopStreaming();	//STOP STREAMING
 				}
-				catch(SocketException e){
+				catch(Exception e){
 					e.printStackTrace();
 				}
-				catch(UnknownHostException e){
-					e.printStackTrace();
-				}
-				catch(IOException e){
-					e.printStackTrace();
-				}
+				
 				finally{
 					socket3.close();
 				}

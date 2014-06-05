@@ -121,7 +121,9 @@
     
     
     </LinearLayout>
-    
+  
+<!-- 
+
 <CheckBox
     android:id="@+id/acceptk"
     android:layout_width="wrap_content"
@@ -132,13 +134,17 @@
     android:paddingTop="3dp"
     android:text="I Accept All Rules of ClassRoom" />
 
+ -->
+
+
     <Button
         android:id="@+id/regbuttonk"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:alpha="0.5"
+       
         android:text="Register"
+        android:layout_marginTop="25dp"
         android:scaleType="centerInside" />
 
     

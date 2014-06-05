@@ -111,7 +111,7 @@ public class FirstMainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				Intent it=new Intent("com.baba.chat.LOGIN");
+				Intent it=new Intent(FirstMainActivity.this,Login.class);
 				startActivity(it);
 				finish();
 				
@@ -195,7 +195,7 @@ public class FirstMainActivity extends Activity {
 		            	  if (value.equals(currentpass))
 		            	  {
 		            		  Toast.makeText(getApplicationContext(), "SUCCESSFUL LOGIN",Toast.LENGTH_SHORT).show();
-		            		  Intent tc=new Intent("com.baba.chat.TESTCONNECTION");
+		            		  Intent tc=new Intent(FirstMainActivity.this,TestConnection.class);
 		            		  tc.putExtra("username1", currentusername);
 		            		  tc.putExtra("roll1", currentroll);
 		            		  
@@ -240,7 +240,16 @@ public class FirstMainActivity extends Activity {
 	@Override
 	public void onBackPressed()
 	{
-	        if (back_pressed + 2000 > System.currentTimeMillis()) super.onBackPressed();
+	        if (back_pressed + 2000 > System.currentTimeMillis()) {
+	        	
+	        	Intent startMain = new Intent(Intent.ACTION_MAIN);
+	            startMain.addCategory(Intent.CATEGORY_HOME);
+	            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	            startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	            startActivity(startMain);
+	        	
+	        	
+	        }
 	        else Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
 	        back_pressed = System.currentTimeMillis();
 	}

@@ -43,7 +43,7 @@ public class Splash extends Activity
 					}
 				finally
 				{// Launching Signin screen 
-					Intent openactivity1 =new Intent("com.baba.chat.FIRSTMAINACTIVITY");
+					Intent openactivity1 =new Intent(Splash.this,FirstMainActivity.class);
 					startActivity(openactivity1);
 				}
 			}

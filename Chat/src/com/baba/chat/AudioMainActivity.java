@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.wifi.WifiInfo;
@@ -51,6 +52,7 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_main_audiotext);
 		init(); // INITIALIZING VARIABLES
 		path=Environment.getExternalStorageDirectory().toString()+"/AakashApp/"+TestConnection.username;
@@ -101,7 +103,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	
 	else if (item.getItemId()==R.id.action_settings){
 		
-		Intent iw=new Intent("com.baba.chat.SETTINGS");
+		Intent iw=new Intent(AudioMainActivity.this,Settings.class);
 		startActivity(iw);
 		
 		
@@ -110,7 +112,7 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	
 	else if (item.getItemId()==R.id.action_help){
 		
-		Intent iw=new Intent("com.baba.chat.HELP");
+		Intent iw=new Intent(AudioMainActivity.this,Help.class);
 		startActivity(iw);
 		
 		
@@ -119,11 +121,19 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	
 else if (item.getItemId()==R.id.action_logout){
 		
-		Intent iw=new Intent("com.baba.chat.FIRSTMAINACTIVITY");
+		/*Intent iw=new Intent(AudioMainActivity.this,FirstMainActivity.class);
 		startActivity(iw);
 		
 		finish();
-		
+		*/
+	Intent startMain = new Intent(AudioMainActivity.this,FirstMainActivity.class);
+    startMain.addCategory(Intent.CATEGORY_HOME);
+    //startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    startActivity(startMain);
+    Toast.makeText(getApplicationContext(), "Logged out Successfully", Toast.LENGTH_SHORT).show();
+	
+	
 		
 	}
 	
@@ -292,7 +302,50 @@ else if (item.getItemId()==R.id.action_logout){
 	 @Override
 	    public void onBackPressed() {
 	       
-	        Toast.makeText(getApplicationContext(), "LogOut From Options To Go Back", Toast.LENGTH_SHORT).show();
+	      //  Toast.makeText(getApplicationContext(), "LogOut From Options To Go Back", Toast.LENGTH_SHORT).show();
+		 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+			    @Override
+			    public void onClick(DialogInterface dialog, int which) {
+			        switch (which){
+			        case DialogInterface.BUTTON_POSITIVE:
+			            //Yes button clicked
+			        	/*
+			        	Intent iw=new Intent(AudioMainActivity.this,FirstMainActivity.class);
+			    		startActivity(iw);
+			    		
+			    		finish();
+			    		*/
+			        	
+			        	Intent startMain = new Intent(AudioMainActivity.this,FirstMainActivity.class);
+			            startMain.addCategory(Intent.CATEGORY_HOME);
+			           // startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			            startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			            startActivity(startMain);
+			            Toast.makeText(getApplicationContext(), "Logged out Successfully", Toast.LENGTH_SHORT).show();
+			        	
+			        	
+			        	
+			            break;
+
+			        case DialogInterface.BUTTON_NEGATIVE:
+			            //No button clicked
+			        	
+			        	
+			        	
+			        	
+			            break;
+			        }
+			    }
+			};
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage("Are you sure to LOGOUT and go back?").setPositiveButton("Yes", dialogClickListener)
+			    .setNegativeButton("No", dialogClickListener).show();
+		 
+		 
+		 
+		 
+		 
 	    }
 	
 	

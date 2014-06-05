@@ -66,14 +66,14 @@ public class Login extends FragmentActivity
 		register=(Button)findViewById(R.id.regbuttonk);
 		dp=(ImageView)findViewById(R.id.pic);
 		//selectPic=(Button)findViewById(R.id.picselect);
-		acceptRules=(CheckBox)findViewById(R.id.acceptk);
+		//acceptRules=(CheckBox)findViewById(R.id.acceptk);
 		
 		username=(EditText)findViewById(R.id.uname);
 		password=(EditText)findViewById(R.id.passk);
 		rollno=(EditText)findViewById(R.id.rollnok);
 	
 		
-		register.setEnabled(false);
+		register.setEnabled(true);
 		
 		
 		// Selecting Pic
@@ -91,7 +91,7 @@ public class Login extends FragmentActivity
 		
 		
 		// Checkbox managing
-		acceptRules.setOnCheckedChangeListener(new OnCheckedChangeListener()
+		/*acceptRules.setOnCheckedChangeListener(new OnCheckedChangeListener()
 		{
 		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 		    {
@@ -108,7 +108,7 @@ public class Login extends FragmentActivity
 		    }
 		});
 		
-		
+		*/
 		// Register button
 		
 		register.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +218,7 @@ public class Login extends FragmentActivity
 				
 					try{
 					
-				Intent intnt=new Intent("com.baba.chat.TESTCONNECTION");
+				Intent intnt=new Intent(Login.this,TestConnection.class);
 				
 				intnt.putExtra("username1", name);
       		  	intnt.putExtra("roll1", roll);
@@ -312,6 +312,16 @@ public class Login extends FragmentActivity
 						tempPath=f.getAbsolutePath();
 						tagdapath=tempPath;
 						
+						//Toast.makeText(getApplicationContext(), Long.toString(new File(tagdapath).length()), Toast.LENGTH_SHORT).show();
+						
+					 if (new File(tagdapath).length()>1048000)
+						{
+							tagdapath=null;
+							Toast.makeText(getApplicationContext(), "File Size Exceeds Limit... \nPlease Choose a different File... ", Toast.LENGTH_SHORT).show();
+						}
+						
+					 else{
+						
 						bm = BitmapFactory.decodeFile(tempPath,
 								btmapOptions);
 
@@ -340,7 +350,11 @@ public class Login extends FragmentActivity
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-					} catch (Exception e) {
+					}
+					 
+					}
+					 
+					 catch (Exception e) {
 						e.printStackTrace();
 					}
 				} 
@@ -350,12 +364,24 @@ public class Login extends FragmentActivity
 
 					 tempPath = getPath(selectedImageUri,Login.this);
 					 tagdapath=tempPath;
+					 
+
+						//Toast.makeText(getApplicationContext(), Long.toString(new File(tagdapath).length()), Toast.LENGTH_SHORT).show();
+						
+					 if (new File(tagdapath).length()>1048000)
+						{
+							tagdapath=null;
+							Toast.makeText(getApplicationContext(), "File Size Exceeds Limit... \nPlease Choose a different File... ", Toast.LENGTH_SHORT).show();
+						}
+					 
+					 else{
+					 
 					Bitmap bm;
 					BitmapFactory.Options btmapOptions = new BitmapFactory.Options();
 					bm = BitmapFactory.decodeFile(tempPath, btmapOptions);
 					dp.setImageBitmap(bm);
 					
-					
+					 }
 				}
 				
 				
@@ -376,7 +402,7 @@ public class Login extends FragmentActivity
 	    @Override
 	    public void onBackPressed() {
 	       
-	        startActivity(new Intent("com.baba.chat.FIRSTMAINACTIVITY"));
+	        startActivity(new Intent(Login.this,FirstMainActivity.class));
 	        finish();
 	    }
 

@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -34,6 +35,7 @@ public class Settings extends Activity {
 		
 	// TODO Auto-generated method stub
 		super.onCreate(kaushikrocks);
+		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.set);
 		path=Environment.getExternalStorageDirectory().toString()+"/AakashApp/";
 		File folder = new File(path);
