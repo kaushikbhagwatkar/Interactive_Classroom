@@ -118,7 +118,27 @@ android:screenOrientation="landscape"
 </activity>
 
 
+<activity
+android:name=".ViewHistory"
+android:label="@string/app_name" >
+<intent-filter>
+<action android:name="com.baba.chat.VIEWHISTORY" />
+ 
+<category android:name="android.intent.category.DEFAULT" />
+</intent-filter>
+</activity>
+<!--  
+<activity
+android:name=".ListAdapter"
+android:label="@string/app_name" >
+<intent-filter>
+<action android:name="com.baba.chat.ListAdapter" />
+ 
+<category android:name="android.intent.category.DEFAULT" />
+</intent-filter>
+</activity>
 
+-->
 
 <activity
 android:name=".TestConnection"

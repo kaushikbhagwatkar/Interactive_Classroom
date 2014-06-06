@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -45,9 +47,16 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 	ImageView dpaudio; 
 	EditText doubtText, doubtSubject;
 	TextView hiname;
+public static	TextView counter;
 	Button sendDoubtText;
+	Button viewHistory;
 	DataInputStream dis;
 	DataOutputStream dos;
+	static String macadd;
+public static ArrayList<String> doubt=new ArrayList<String>();
+public static ArrayList<String> textMessage=new ArrayList<String>();
+public static	int count=0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,7 +69,7 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 		sendDoubtText.setOnClickListener(this); // LISTENER FOR TEXT DOUBT
 												// BUTTON
 	
-
+		viewHistory.setOnClickListener(this); //LISTENER FOR VIEW HISTORY BUTTON
 		Bitmap bmp = BitmapFactory.decodeFile(path+"/dp.jpg");
 
 		dpaudio.setImageBitmap(bmp);
@@ -78,6 +87,8 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 		doubtSubject = (EditText) findViewById(R.id.doubt_subject);
 		dpaudio=(ImageView)findViewById(R.id.dpaudio);
 		hiname=(TextView)findViewById(R.id.hi_name);
+		viewHistory = (Button) findViewById(R.id.view_history);
+		counter=(TextView)findViewById(R.id.counter);
 		
 		
 	}
@@ -141,6 +152,8 @@ else if (item.getItemId()==R.id.action_logout){
 		case R.id.send_text_doubt:
 			textMsg = doubtText.getText().toString(); // READ MESSAGE
 			textSubject = doubtSubject.getText().toString(); // READ SUBJECT
+			
+			if(count<=5)
 			if (textMsg.isEmpty() || textSubject.isEmpty()) { // CHECK IF ANY OF
 																// THE TWO FIELD
 																// IS EMPTY
@@ -149,6 +162,17 @@ else if (item.getItemId()==R.id.action_logout){
 			} else {
 				createDialog(); // CREATE A CONFIRMATION DIALOG
 			}
+			else{
+				
+				Toast.makeText(getBaseContext(), "Max Limit of 5 doubts reached", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getBaseContext(), "View Text Doubts History", Toast.LENGTH_SHORT).show();
+		      Log.d("mohit", "else condition");
+	
+			}
+			
+			
+			
+			
 			break;
 		case R.id.audio_doubt_button:
 			confirm = new Intent(AudioMainActivity.this, AudioDoubt.class); // START
@@ -157,6 +181,26 @@ else if (item.getItemId()==R.id.action_logout){
 																		// SESSION
 			startActivity(confirm);
 			break;
+		case R.id.view_history:
+	try{
+			Intent vh=new Intent(AudioMainActivity.this,ViewHistory.class);
+		  
+		  vh.putStringArrayListExtra("doubtt",doubt);
+		  vh.putStringArrayListExtra("textMessage", textMessage);
+			 
+		for(int i=0;i<doubt.size();i++)
+			{Log.d("mohit","testing"+doubt.get(i));
+			Log.d("mohit","testing  "+textMessage.get(i));
+			
+			}
+		  startActivity(vh);
+		 }
+		 catch(Exception e)
+		 {
+			 Log.d("mohit", "Starting of the activity");
+		 }
+		  break;
+			
 		}
 	}
 
@@ -176,9 +220,22 @@ else if (item.getItemId()==R.id.action_logout){
 		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				Log.e("yes", "yes");
-				sendTextRequest(); // SEND DOUBT IF YES IS CLICKED
-			}
-		});
+			count++;
+			if(count<=5)
+				{	
+			doubt.add(doubtSubject.getText().toString());
+			textMessage.add(doubtText.getText().toString());
+			
+			counter.setText("count remaining:"+(5-count));
+					
+					
+					sendTextRequest();
+				}
+			else
+				counter.setText("count remaining: 0");
+			
+				// SEND DOUBT IF YES IS CLICKED
+			}});
 		AlertDialog alert = builder.create(); // CREATE ALERT DIALOG
 		alert.show();
 	}
@@ -214,6 +271,7 @@ else if (item.getItemId()==R.id.action_logout){
 						Log.d("mohit", "roll="+TestConnection.roll);
 						
 						//	if(TestConnection.macid!=null)
+						macadd=getMacAddress();
 						dos.writeUTF(getMacAddress());
 						Log.d("mohit", "macid="+getMacAddress());
 							
@@ -268,6 +326,10 @@ else if (item.getItemId()==R.id.action_logout){
 
 		}.start();		//MESSAGE SENDING THREAD STARTED
 	}
+	
+	
+	
+	
 	public void sendFile(File file) throws IOException {
         FileInputStream fileIn = new FileInputStream(file);
         byte[] buf = new byte[Short.MAX_VALUE];

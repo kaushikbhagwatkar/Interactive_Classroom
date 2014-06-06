@@ -87,38 +87,83 @@
 
             <!-- TEXT FIELD TO ENTER THE SUBJECT OF DOUBT -->
         </LinearLayout>
+        <LinearLayout
+            
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+           >
+            <TextView
+                
+                
+       
+            android:id="@+id/counter"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="count remaining:5"
+            android:textSize="25dp"
+            android:layout_gravity="left"         
+            android:layout_weight="4"
+                
+       />         
+              
+         
 
-        <EditText
+            <Button
+                android:id="@+id/view_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="View History" 
+                 android:layout_weight="1"
+           />
+       
+</LinearLayout>
+
+<EditText
             android:id="@+id/doubt_subject"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_gravity="center"
+            android:layout_gravity="left"
             android:layout_weight="1.5"
             android:ellipsize="start"
             android:ems="10"
             android:gravity="center"
             android:hint="Subject"
-            android:width="350dp" />
+            android:width="350dp" 
+            android:layout_marginLeft="70dp"/>
 
         <!-- TEXT FIELD TO ENTER THE DOUBT -->
-
+         <LinearLayout
+              android:layout_width="fill_parent"
+   	 		  android:layout_height="0dp"
+   	 		  android:layout_weight="1.5"
+              android:orientation="horizontal"
+              android:layout_gravity="center"
+              android:gravity="center"
+            
+             >
+            
         <EditText
             android:id="@+id/text_doubt_msg"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout_weight="1.5"
             android:ellipsize="start"
             android:ems="10"
             android:gravity="center"
             android:hint="Your Doubt Here_"
             android:inputType="textMultiLine"
             android:minLines="4"
-            android:width="350dp" >
+            android:width="350dp" 
+           >
         </EditText>
-
+		
+        </LinearLayout>
         <!-- BUTTON TO SEND TEXT DOUBT -->
-
+   
         <Button
             android:id="@+id/send_text_doubt"
             android:layout_width="wrap_content"
