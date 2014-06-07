@@ -10,9 +10,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +42,7 @@ public class Login extends FragmentActivity
 	ImageView dp;
 	Button selectPic;
 	EditText username,password,rollno;
+	TextView dob;
 	String tagdapath=null;
 	
 //
@@ -71,6 +76,7 @@ public class Login extends FragmentActivity
 		username=(EditText)findViewById(R.id.uname);
 		password=(EditText)findViewById(R.id.passk);
 		rollno=(EditText)findViewById(R.id.rollnok);
+		dob=(TextView)findViewById(R.id.doblogin);
 	
 		
 		register.setEnabled(true);
@@ -89,26 +95,40 @@ public class Login extends FragmentActivity
 		});
 		
 		
-		
-		// Checkbox managing
-		/*acceptRules.setOnCheckedChangeListener(new OnCheckedChangeListener()
-		{
-		    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
-		    {
-		        if ( isChecked )
-		        {
-		        	register.setAlpha((float)1.0);
-		        	register.setEnabled(true);
-		        }
+		final Calendar myCalendar = Calendar.getInstance();
 
-		        else
-		        {   register.setAlpha((float) 0.5);
-		        	register.setEnabled(false);
-		        }
+		final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+		    @Override
+		    public void onDateSet(DatePicker view, int year, int monthOfYear,
+		            int dayOfMonth) {
+		        // TODO Auto-generated method stub
+		        myCalendar.set(Calendar.YEAR, year);
+		        myCalendar.set(Calendar.MONTH, monthOfYear);
+		        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+		        String myFormat = "MM/dd/yy"; //In which you need put here
+		        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+		        dob.setText(sdf.format(myCalendar.getTime()));
 		    }
+
+		};
+		
+		dob.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				new DatePickerDialog(Login.this, date, myCalendar
+	                    .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+	                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+				
+			}
 		});
 		
-		*/
+		
+		
 		// Register button
 		
 		register.setOnClickListener(new View.OnClickListener() {
@@ -128,13 +148,13 @@ public class Login extends FragmentActivity
 				String name= username.getText().toString();
 				String roll = rollno.getText().toString();
 				String pass = password.getText().toString();
-				
+				String dobtext=dob.getText().toString();
 				
 				
 				File dir = new File(Environment.getExternalStorageDirectory().toString()+"/AakashApp/"+name);
 				
 				// Validation of all fields
-				if (name.equals("")||roll.equals("")||pass.equals(""))
+				if (name.equals("")||roll.equals("")||pass.equals("")||dobtext.equals(""))
 				{
 					Toast.makeText(getApplicationContext(), "Please Fill All The Fields", Toast.LENGTH_SHORT).show();
 					
@@ -169,6 +189,7 @@ public class Login extends FragmentActivity
 					  new File(folder, "user.txt");	
 					  new File(folder,"pass.txt");
 					  new File(folder,"roll.txt");
+					  new File(folder,"dob.txt");
 					  
 					  	writer = new PrintWriter(currentPath+"user.txt");
 						writer.print(name);
@@ -176,7 +197,9 @@ public class Login extends FragmentActivity
 						writer1.print(pass);
 						writer2 = new PrintWriter(currentPath+"roll.txt");
 						writer2.print(roll);
-						writer.close();writer1.close();writer2.close();
+						writer3 = new PrintWriter(currentPath+"dob.txt");
+						writer3.print(dobtext);
+						writer.close();writer1.close();writer2.close();writer3.close();
 					  
 						} catch (Exception e) {
 							// TODO Auto-generated catch block

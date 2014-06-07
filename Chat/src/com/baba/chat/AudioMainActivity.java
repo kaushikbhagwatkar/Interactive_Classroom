@@ -62,8 +62,9 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 		sendDoubtText.setOnClickListener(this); // LISTENER FOR TEXT DOUBT
 												// BUTTON
 	
-
-		Bitmap bmp = BitmapFactory.decodeFile(path+"/dp.jpg");
+		BitmapFactory.Options options=new BitmapFactory.Options();
+		options.inSampleSize = 4;
+		Bitmap bmp = BitmapFactory.decodeFile(path+"/dp.jpg",options);
 
 		dpaudio.setImageBitmap(bmp);
 		
@@ -132,6 +133,7 @@ else if (item.getItemId()==R.id.action_logout){
     startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     startActivity(startMain);
     Toast.makeText(getApplicationContext(), "Logged out Successfully", Toast.LENGTH_SHORT).show();
+    finish();
 	
 	
 		
@@ -322,7 +324,7 @@ else if (item.getItemId()==R.id.action_logout){
 			            startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			            startActivity(startMain);
 			            Toast.makeText(getApplicationContext(), "Logged out Successfully", Toast.LENGTH_SHORT).show();
-			        	
+			            finish();
 			        	
 			        	
 			            break;

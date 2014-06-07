@@ -35,15 +35,16 @@ LayoutInflater inflater = context.getLayoutInflater();
 View rowView= inflater.inflate(R.layout.list_single, null, true);
 
 TextView nameinlist = (TextView) rowView.findViewById(R.id.namedy);
-TextView rollinlist = (TextView) rowView.findViewById(R.id.rolldy);
+//TextView rollinlist = (TextView) rowView.findViewById(R.id.rolldy);
 ImageView imageinlist = (ImageView) rowView.findViewById(R.id.dpdy);
 
 nameinlist.setText(web[position]);
-rollinlist.setText(rollweb[position]);
+//rollinlist.setText(rollweb[position]);
 //imageinlist.setImageResource(imageId[position]);
 String mypath=Environment.getExternalStorageDirectory().toString()+"/AakashApp/";
-
-Bitmap bmp = BitmapFactory.decodeFile(mypath+web[position]+"/dp.jpg");
+BitmapFactory.Options options=new BitmapFactory.Options();
+options.inSampleSize = 4;
+Bitmap bmp = BitmapFactory.decodeFile(mypath+web[position]+"/dp.jpg",options);
 
 imageinlist.setImageBitmap(bmp);
 

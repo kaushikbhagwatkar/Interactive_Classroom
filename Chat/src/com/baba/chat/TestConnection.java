@@ -116,8 +116,9 @@ public class TestConnection extends Activity
 		
 		iv=(ImageView)findViewById(R.id.dpconnect);
 		String mypath=Environment.getExternalStorageDirectory().toString()+"/AakashApp/";
-
-		Bitmap bmp = BitmapFactory.decodeFile(mypath+username+"/dp.jpg");
+		BitmapFactory.Options options=new BitmapFactory.Options();
+		options.inSampleSize = 4;
+		Bitmap bmp = BitmapFactory.decodeFile(mypath+username+"/dp.jpg",options);
 
 		iv.setImageBitmap(bmp);
 		TextView banner =(TextView)findViewById(R.id.banner);
@@ -259,6 +260,7 @@ public class TestConnection extends Activity
 						
 						Intent rc=new Intent(TestConnection.this,AudioMainActivity.class);
 						startActivity(rc);
+						finish();
 						
 						
 					}
@@ -283,7 +285,7 @@ public class TestConnection extends Activity
 		    public void onBackPressed() {
 		       
 		        startActivity(new Intent(TestConnection.this,AudioMainActivity.class));
-		        //finish();
+		        finish();
 		    }
 		
 }

@@ -79,10 +79,10 @@
 
             <ImageView
                 android:id="@+id/dpaudio"
-                android:layout_width="110dp"
+                android:layout_width="140dp"
                 android:layout_height="80dp"
                 android:layout_gravity="right"
-                android:scaleType="fitXY"
+                
                 android:src="@drawable/speak" />
 
             <!-- TEXT FIELD TO ENTER THE SUBJECT OF DOUBT -->

@@ -82,8 +82,8 @@
             android:id="@+id/uname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="35dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="10dp"
             android:contentDescription="Email"
             android:ems="10"
             android:gravity="center"
@@ -97,12 +97,23 @@
             android:id="@+id/rollnok"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="25dp"
             android:contentDescription="Email"
             android:ems="10"
             android:gravity="center"
             android:hint="Roll No"
             android:inputType="text" />
+
+        <TextView
+            android:id="@+id/doblogin"
+            style="@android:style/Widget.Holo.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Date of Birth"
+             />
 
         <EditText
             android:id="@+id/passk"
@@ -136,18 +147,14 @@
 
  -->
 
-
     <Button
         android:id="@+id/regbuttonk"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
-       
-        android:text="Register"
-        android:layout_marginTop="25dp"
-        android:scaleType="centerInside" />
-
-    
+        android:layout_marginTop="20dp"
+        android:scaleType="centerInside"
+        android:text="Register" />
    
  </LinearLayout>
    </ScrollView>
