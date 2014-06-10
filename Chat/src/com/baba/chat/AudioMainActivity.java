@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -44,17 +45,25 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 	Intent confirm;
 	ImageButton raiseHandAudio;
 	ImageView dpaudio; 
+	public static ArrayList<String> doubt=new ArrayList<String>();
+	public static ArrayList<String> textMessage=new ArrayList<String>();
 	EditText doubtText, doubtSubject;
 	TextView hiname;
-	Button sendDoubtText;
+	public static TextView counter;
+	static String macadd;
+	Button sendDoubtText,viewHistory;;
 	DataInputStream dis;
 	DataOutputStream dos;
+	public static int count;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_main_audiotext);
 		init(); // INITIALIZING VARIABLES
+		
+		viewHistory.setOnClickListener(this); //LISTENER FOR VIEW HISTORY BUTTON
+		
 		path=Environment.getExternalStorageDirectory().toString()+"/AakashApp/"+TestConnection.username;
 		
 		raiseHandAudio.setOnClickListener(this); // LISTENER FOR AUDIO DOUBT
@@ -81,6 +90,8 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 		doubtSubject = (EditText) findViewById(R.id.doubt_subject);
 		dpaudio=(ImageView)findViewById(R.id.dpaudio);
 		hiname=(TextView)findViewById(R.id.hi_name);
+		viewHistory = (Button) findViewById(R.id.view_history);
+		counter=(TextView)findViewById(R.id.counter);
 		
 		
 	}
@@ -162,6 +173,26 @@ else if (item.getItemId()==R.id.action_logout){
 				createDialog(); // CREATE A CONFIRMATION DIALOG
 			}
 			break;
+		case R.id.view_history:
+			try{
+					Intent vh=new Intent(AudioMainActivity.this,ViewHistory.class);
+				  
+				  vh.putStringArrayListExtra("doubtt",doubt);
+				  vh.putStringArrayListExtra("textMessage", textMessage);
+					 
+				for(int i=0;i<doubt.size();i++)
+					{Log.d("mohit","testing"+doubt.get(i));
+					Log.d("mohit","testing  "+textMessage.get(i));
+					
+					}
+				  startActivity(vh);
+				 }
+				 catch(Exception e)
+				 {
+					 Log.d("mohit", e.toString()+"  Starting of the activity");
+				 }
+				  break;
+			
 		case R.id.audio_doubt_button:
 			confirm = new Intent(AudioMainActivity.this, AudioDoubt.class); // START
 																		// AUDIO
@@ -188,9 +219,22 @@ else if (item.getItemId()==R.id.action_logout){
 		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				Log.e("yes", "yes");
-				sendTextRequest(); // SEND DOUBT IF YES IS CLICKED
-			}
-		});
+				count++;
+				if(count<=5)
+					{	
+				doubt.add(doubtSubject.getText().toString());
+				textMessage.add(doubtText.getText().toString());
+				
+				counter.setText("Doubts Remaining : "+(5-count));
+						
+						
+						sendTextRequest();
+					}
+				else
+					counter.setText("Doubts Remaining : 0");
+				
+					// SEND DOUBT IF YES IS CLICKED
+				}});
 		AlertDialog alert = builder.create(); // CREATE ALERT DIALOG
 		alert.show();
 	}

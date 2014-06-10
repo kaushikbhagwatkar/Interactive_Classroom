@@ -16,12 +16,16 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -169,18 +173,33 @@ public class FirstMainActivity extends Activity {
 				/////////////////List long click listener//////////////
 				
 				
+				registerForContextMenu(list);
 				
+					
+			/*	
+				list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			        @Override
+			        public boolean onItemLongClick(AdapterView<?> av, View v, int pos, long id) {
+			           // return onLongListItemClick(v,pos,id);
+			        	
+			        	
+			        	Toast.makeText(getApplicationContext(), "LONGGG CLICK"+pos,Toast.LENGTH_SHORT).show();
+			        	
+			        	
+			        	
+			        	return true;
+			        	
+			        }
+			    });
 				
-				
-				
-				
-				/// To be Implemented in future////////////
-				
-				
-				
-				
-				
-				
+			
+				lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				    @Override
+				    public void onItemClick(AdapterView<?> av, View v, int pos, long id) {
+				        //onListItemClick(v,pos,id);
+				    }
+				});
+				*/
 				
 				
 				//////////////////////////Long click ends here////////////////
@@ -537,10 +556,103 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	
 	
 	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	      super.onCreateContextMenu(menu, v, menuInfo);
+	      if (v.getId()==R.id.list) {
+	          MenuInflater inflater = getMenuInflater();
+	          inflater.inflate(R.menu.contextmenu, menu);
+	      }
+	}
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+	      final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	      switch(item.getItemId()) {
+	         case R.id.deletecontext:
+	         // add stuff here
+	        	 
+	        		AlertDialog.Builder alert = new AlertDialog.Builder(FirstMainActivity.this);
+
+	        		alert.setTitle("Enter Password");
+	        		alert.setMessage("Password");
+
+	        		// Set an EditText view to get user input
+	        		final EditText input = new EditText(FirstMainActivity.this);
+	        		input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+	        		alert.setView(input);
+
+	        		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	        		public void onClick(DialogInterface dialog, int whichButton) {
+	        		String value = input.getText().toString();
+
+	        		// Checking password
+	        		if (value.equals(passweb[info.position]))
+	        		{
+	        			 
+	   	        	 ////////////////////////////
+	   	        	 Toast.makeText(getBaseContext(), "Successfully DELETED : "+ web[info.position], Toast.LENGTH_SHORT).show();
+	   	        	 File dir=new File(mypath+web[info.position]);
+	   	        	
+	   	        	
+	   	        	 
+	   	        	 if (dir.isDirectory()) {
+	   	        	      DeleteRecursive(dir);
+	   	        	    }
+	   	        	 
+	   	        	 Intent iu = new Intent(FirstMainActivity.this,FirstMainActivity.class);
+	   	        	 startActivity(iu);
+	   	        	 finish();
+	   	        	 /////////////////////////////
+
+
+	        		}
+
+	        		else
+	        		{
+	        		Toast.makeText(getApplicationContext(), "FAILURE",Toast.LENGTH_SHORT).show();
+	        		}
+
+	        		}
+	        		});
+
+	        		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	        		public void onClick(DialogInterface dialog, int whichButton) {
+	        		// Canceled.
+	        		}
+	        		});
+
+	        		alert.show();
+
+
+	        	
+	        	 
+	            return true;
+	          
+	         case R.id.passcontext:
+	            ///////
+	        	 
+	        	 Toast.makeText(getApplicationContext(), "Click on Forgot Password while logging in to change password...",Toast.LENGTH_SHORT).show();
+	        	 
+	            
+	        	 
+	        	 
+	        	 return true;
+	            
+	          default:
+	                return super.onContextItemSelected(item);
+	      }
+	}
 	
 	
 	
-	
+	 void DeleteRecursive(File fileOrDirectory) {
+		    if (fileOrDirectory.isDirectory())
+		        for (File child : fileOrDirectory.listFiles())
+		            DeleteRecursive(child);
+
+		    fileOrDirectory.delete();
+		}
 	
 	
 }
