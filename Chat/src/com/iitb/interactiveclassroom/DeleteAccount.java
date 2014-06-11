@@ -90,7 +90,7 @@ public class DeleteAccount extends Activity
 	{
 	        
 	        	
-	        	Intent startMain = new Intent(DeleteAccount.this,FirstMainActivity.class);
+	        	Intent startMain = new Intent(DeleteAccount.this,Users.class);
 	            startMain.addCategory(Intent.CATEGORY_HOME);
 	            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	            startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
