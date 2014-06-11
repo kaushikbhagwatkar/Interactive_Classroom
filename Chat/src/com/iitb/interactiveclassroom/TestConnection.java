@@ -56,10 +56,10 @@ public class TestConnection extends Activity
 	
 	
 		@Override
-	protected void onCreate(Bundle kaushik) 
+	protected void onCreate(Bundle savedInstanceState) 
 	{
 			// TODO Auto-generated method stub
-		super.onCreate(kaushik);
+		super.onCreate(savedInstanceState);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.testnew);
 		b=(Button)findViewById(R.id.testbutton);
