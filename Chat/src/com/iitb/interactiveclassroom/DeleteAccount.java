@@ -19,9 +19,9 @@ public class DeleteAccount extends Activity
 	ListView listView;
 	
 	@Override
-	protected void onCreate(Bundle babarockes) {
+	protected void onCreate(Bundle bundle) {
 		// TODO Auto-generated method stub
-		super.onCreate(babarockes);
+		super.onCreate(bundle);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.delete_account);
 		

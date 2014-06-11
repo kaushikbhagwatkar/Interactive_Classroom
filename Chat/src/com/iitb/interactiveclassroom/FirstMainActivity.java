@@ -539,11 +539,11 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	{
 	        if (back_pressed + 2000 > System.currentTimeMillis()) {
 	        	
-	        	Intent startMain = new Intent(Intent.ACTION_MAIN);
+	        	/*Intent startMain = new Intent(Intent.ACTION_MAIN);
 	            startMain.addCategory(Intent.CATEGORY_HOME);
 	            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	            startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	            startActivity(startMain);
+	            startActivity(startMain);*/
 	            finish();
 	        	
 	        	

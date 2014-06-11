@@ -62,9 +62,9 @@ public class Login extends FragmentActivity
 	
 	
 	@Override
-	protected void onCreate(Bundle babaji) {
+	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(babaji);
+		super.onCreate(savedInstanceState);
 		
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -431,7 +431,7 @@ public class Login extends FragmentActivity
 	    @Override
 	    public void onBackPressed() {
 	       
-	        startActivity(new Intent(Login.this,FirstMainActivity.class));
+	       /* startActivity(new Intent(Login.this,FirstMainActivity.class));*/
 	        finish();
 	    }
 

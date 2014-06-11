@@ -98,6 +98,7 @@
         <activity
             android:name="com.iitb.interactiveclassroom.Splash"
             android:label="@string/app_name"
+            android:theme="@style/SplashTheme"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

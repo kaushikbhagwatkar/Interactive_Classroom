@@ -33,11 +33,11 @@ public class Settings extends Activity {
 
 	
 	@Override
-	protected void onCreate(Bundle kaushikrocks) {
+	protected void onCreate(Bundle savedInstanceState) {
 		
 		
 	// TODO Auto-generated method stub
-		super.onCreate(kaushikrocks);
+		super.onCreate(savedInstanceState);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.set);
 		path=Environment.getExternalStorageDirectory().toString()+"/AakashApp/";
