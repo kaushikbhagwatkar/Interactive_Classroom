@@ -56,7 +56,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.iitb.interactiveclassroom.FirstMainActivity"
+            android:name="com.iitb.interactiveclassroom.Users"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>
