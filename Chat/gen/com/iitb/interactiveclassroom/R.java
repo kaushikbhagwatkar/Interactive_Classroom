@@ -47,12 +47,11 @@ public final class R {
     }
     public static final class id {
         public static final int action_about=0x7f090032;
-        public static final int action_aboutfm=0x7f090036;
-        public static final int action_exit=0x7f090038;
+        public static final int action_aboutfm=0x7f090035;
+        public static final int action_exit=0x7f090037;
         public static final int action_help=0x7f090033;
-        public static final int action_helpfm=0x7f090037;
+        public static final int action_helpfm=0x7f090036;
         public static final int action_logout=0x7f090034;
-        public static final int action_remove=0x7f090035;
         public static final int action_settings=0x7f090031;
         public static final int address=0x7f090022;
         public static final int audio_doubt_button=0x7f090005;
