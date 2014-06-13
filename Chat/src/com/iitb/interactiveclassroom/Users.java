@@ -28,7 +28,6 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -36,10 +35,8 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +46,8 @@ public class Users extends Activity {
 	Button forgetpw;
 	ImageView newaccbutton;
 	InputStream in, in1, in2, in3;
-	/* ScrollView parentScroll; */
+	AdapterContextMenuInfo info;
+	
 	BufferedReader reader, reader1, reader2;
 	File[] users;
 	String line, line1, line2, line3;
@@ -62,6 +60,8 @@ public class Users extends Activity {
 	List<String> passstate = new ArrayList<String>();
 	List<String> dobstate = new ArrayList<String>();
 
+	CustomList adapter;
+	
 	String mypath, currentpass, currentusername, currentroll, currentdob;
 	int statecount;
 
@@ -151,11 +151,12 @@ public class Users extends Activity {
 		});
 
 		// Setting listview
-		CustomList adapter = new CustomList(Users.this, web, rollweb);
+		adapter = new CustomList(Users.this, web, rollweb);
 		list = (ListView) findViewById(R.id.list);
 		list.setAdapter(adapter);
 		list.setScrollingCacheEnabled(false);
 
+		
 		/*
 		 * // Scrolling listview
 		 * 
@@ -172,33 +173,61 @@ public class Users extends Activity {
 
 		registerForContextMenu(list);
 
-		/*
-		 * list.setOnItemLongClickListener(new
-		 * AdapterView.OnItemLongClickListener() {
-		 * 
-		 * @Override public boolean onItemLongClick(AdapterView<?> av, View v,
-		 * int pos, long id) { // return onLongListItemClick(v,pos,id);
-		 * 
-		 * 
-		 * Toast.makeText(getApplicationContext(),
-		 * "LONGGG CLICK"+pos,Toast.LENGTH_SHORT).show();
-		 * 
-		 * 
-		 * 
-		 * return true;
-		 * 
-		 * } });
-		 * 
-		 * 
-		 * lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-		 * 
-		 * @Override public void onItemClick(AdapterView<?> av, View v, int pos,
-		 * long id) { //onListItemClick(v,pos,id); } });
-		 */
+		
+		  /*list.setOnItemLongClickListener(new
+		  AdapterView.OnItemLongClickListener() {
+		  
+		  @Override public boolean onItemLongClick(AdapterView<?> av, View v,
+		  int pos, long id) { // return onLongListItemClick(v,pos,id);
+		  
+		  
+		  Toast.makeText(getApplicationContext(),
+		  "LONGGG CLICK"+pos,Toast.LENGTH_SHORT).show();
+		  
+		  
+		  
+		  return true;
+		  
+		  } });*/
+		  
+		  
+		 /* lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		 
+		  @Override public void onItemClick(AdapterView<?> av, View v, int pos,
+		 long id) { //onListItemClick(v,pos,id); } });
+*/		 
 
 		// ////////////////////////Long click ends here////////////////
 
-		list.setOnTouchListener(new View.OnTouchListener() {
+		// SWIPE TO DELETE CODE 
+		
+		SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                        list,
+                        new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                	
+                                	deleteUser(position);
+                                	//adapter.remove(adapter.getItem(position));                                
+                                }
+                                //adapter.notifyDataSetChanged();
+                            }
+                        });
+		
+        list.setOnTouchListener(touchListener);
+        // Setting this scroll listener is required to ensure that during ListView scrolling,
+        // we don't look for swipes.
+        list.setOnScrollListener(touchListener.makeScrollListener());
+        
+        
+	/*	list.setOnTouchListener(new View.OnTouchListener() {
 
 			public boolean onTouch(View v, MotionEvent event) {
 				// Log.v("CHILD", "CHILD TOUCH");
@@ -207,7 +236,7 @@ public class Users extends Activity {
 				v.getParent().requestDisallowInterceptTouchEvent(true);
 				return false;
 			}
-		});
+		});*/
 
 		// //////////////////////
 
@@ -469,14 +498,15 @@ public class Users extends Activity {
 					Toast.LENGTH_LONG).show();
 		}
 
-		else if (item.getItemId() == R.id.action_remove) {
+		// DELETE OPTION in menu ----> remove
+		/*else if (item.getItemId() == R.id.action_remove) {
 
 			Intent iw = new Intent(Users.this, DeleteAccount.class);
 			iw.putExtra("users", web);
 			startActivity(iw);
 			finish();
 
-		}
+		}*/
 
 		else if (item.getItemId() == R.id.action_helpfm) {
 
@@ -531,68 +561,15 @@ public class Users extends Activity {
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
-		final AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+		info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		switch (item.getItemId()) {
 		case R.id.deletecontext:
 			// add stuff here
 
-			AlertDialog.Builder alert = new AlertDialog.Builder(Users.this);
-
-			alert.setTitle("Enter Password");
-			alert.setMessage("Password");
-
-			// Set an EditText view to get user input
-			final EditText input = new EditText(Users.this);
-			input.setInputType(InputType.TYPE_CLASS_TEXT
-					| InputType.TYPE_TEXT_VARIATION_PASSWORD);
-			alert.setView(input);
-
-			alert.setPositiveButton("Ok",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							String value = input.getText().toString();
-
-							// Checking password
-							if (value.equals(passweb[info.position])) {
-
-								// //////////////////////////
-								Toast.makeText(
-										getBaseContext(),
-										"Successfully Deleted : "
-												+ web[info.position],
-										Toast.LENGTH_SHORT).show();
-								File dir = new File(mypath + web[info.position]);
-
-								if (dir.isDirectory()) {
-									DeleteRecursive(dir);
-								}
-
-								Intent iu = new Intent(Users.this, Users.class);
-								startActivity(iu);
-								finish();
-								// ///////////////////////////
-
-							}
-
-							else {
-								Toast.makeText(getApplicationContext(),
-										"Incorrect password.", Toast.LENGTH_SHORT).show();
-							}
-
-						}
-					});
-
-			alert.setNegativeButton("Cancel",
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog,
-								int whichButton) {
-							// Canceled.
-						}
-					});
-
-			alert.show();
+			deleteUser(currentpos);
+			
+			
 
 			return true;
 
@@ -609,6 +586,69 @@ public class Users extends Activity {
 		default:
 			return super.onContextItemSelected(item);
 		}
+	}
+
+	private void deleteUser(final int pos) {
+		// TODO Auto-generated method stub
+		AlertDialog.Builder alert = new AlertDialog.Builder(Users.this);
+
+		alert.setTitle("Enter password to delete account");
+		alert.setMessage("Password: ");
+		
+		// Set an EditText view to get user input
+		final EditText input = new EditText(Users.this);
+		input.setInputType(InputType.TYPE_CLASS_TEXT
+				| InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		alert.setView(input);
+
+		alert.setPositiveButton("OK",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int whichButton) {
+						String value = input.getText().toString();
+
+						// Checking password
+						if (value.equals(passweb[pos])) {
+
+							// //////////////////////////
+							Toast.makeText(
+									getBaseContext(),
+									"Successfully Deleted : "
+											+ web[pos],
+									Toast.LENGTH_SHORT).show();
+							File dir = new File(mypath + web[pos]);
+
+							if (dir.isDirectory()) {
+								DeleteRecursive(dir);
+							}
+
+							Intent iu = new Intent(Users.this, Users.class);
+							iu.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+							startActivity(iu);
+							overridePendingTransition(0, 0);
+							finish();
+							
+
+						}
+
+						else {
+							Toast.makeText(getApplicationContext(),
+									"Incorrect password.", Toast.LENGTH_SHORT).show();
+						}
+
+					}
+				});
+
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,
+							int whichButton) {
+						// Canceled.
+					}
+				});
+
+		
+		alert.show();
 	}
 
 	void DeleteRecursive(File fileOrDirectory) {

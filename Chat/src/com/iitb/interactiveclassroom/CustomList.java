@@ -51,4 +51,5 @@ imageinlist.setImageBitmap(bmp);
 
 return rowView;
 }
+
 }

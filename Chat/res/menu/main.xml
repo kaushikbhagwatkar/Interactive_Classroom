@@ -22,7 +22,7 @@
         android:id="@+id/action_logout"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="LOGOUT"/>
+        android:title="Logout"/>
     
 
    
