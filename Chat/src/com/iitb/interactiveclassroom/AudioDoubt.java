@@ -1,4 +1,4 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -8,12 +8,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 

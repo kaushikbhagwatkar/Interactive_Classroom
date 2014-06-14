@@ -1,4 +1,4 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,7 +15,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class Settings extends Activity {
@@ -30,11 +33,11 @@ public class Settings extends Activity {
 
 	
 	@Override
-	protected void onCreate(Bundle kaushikrocks) {
+	protected void onCreate(Bundle savedInstanceState) {
 		
 		
 	// TODO Auto-generated method stub
-		super.onCreate(kaushikrocks);
+		super.onCreate(savedInstanceState);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.set);
 		path=Environment.getExternalStorageDirectory().toString()+"/AakashApp/";

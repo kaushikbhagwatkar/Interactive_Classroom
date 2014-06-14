@@ -1,4 +1,4 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -51,4 +51,5 @@ imageinlist.setImageBitmap(bmp);
 
 return rowView;
 }
+
 }

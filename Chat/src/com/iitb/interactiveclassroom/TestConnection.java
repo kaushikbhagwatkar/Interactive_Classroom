@@ -1,18 +1,16 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 
 
-import java.io.BufferedReader; 
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,13 +20,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class TestConnection extends Activity
 {
@@ -55,10 +56,10 @@ public class TestConnection extends Activity
 	
 	
 		@Override
-	protected void onCreate(Bundle kaushik) 
+	protected void onCreate(Bundle savedInstanceState) 
 	{
 			// TODO Auto-generated method stub
-		super.onCreate(kaushik);
+		super.onCreate(savedInstanceState);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.testnew);
 		b=(Button)findViewById(R.id.testbutton);

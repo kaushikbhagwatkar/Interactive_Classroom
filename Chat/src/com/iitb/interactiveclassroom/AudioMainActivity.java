@@ -1,4 +1,4 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -6,7 +6,6 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -133,12 +132,12 @@ public boolean onOptionsItemSelected(MenuItem item) {
 	
 else if (item.getItemId()==R.id.action_logout){
 		
-		/*Intent iw=new Intent(AudioMainActivity.this,FirstMainActivity.class);
+		/*Intent iw=new Intent(AudioMainActivity.this,Users.class);
 		startActivity(iw);
 		
 		finish();
 		*/
-	Intent startMain = new Intent(AudioMainActivity.this,FirstMainActivity.class);
+	Intent startMain = new Intent(AudioMainActivity.this,Users.class);
     startMain.addCategory(Intent.CATEGORY_HOME);
     //startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -356,13 +355,13 @@ else if (item.getItemId()==R.id.action_logout){
 			        case DialogInterface.BUTTON_POSITIVE:
 			            //Yes button clicked
 			        	/*
-			        	Intent iw=new Intent(AudioMainActivity.this,FirstMainActivity.class);
+			        	Intent iw=new Intent(AudioMainActivity.this,Users.class);
 			    		startActivity(iw);
 			    		
 			    		finish();
 			    		*/
 			        	
-			        	Intent startMain = new Intent(AudioMainActivity.this,FirstMainActivity.class);
+			        	Intent startMain = new Intent(AudioMainActivity.this,Users.class);
 			            startMain.addCategory(Intent.CATEGORY_HOME);
 			           // startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			            startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

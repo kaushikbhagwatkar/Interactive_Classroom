@@ -1,13 +1,11 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 
 
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import android.app.Activity;
@@ -15,11 +13,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class ListAdapter extends ArrayAdapter<String> {
@@ -195,7 +187,7 @@ delete.setOnClickListener(new OnClickListener(){
 	            Log.d("mohit", "Reacheddddddddddddddd");
 	            try{
 	            	
-	           Intent intr=new Intent("com.baba.chat.VIEWHISTORY");
+	           Intent intr=new Intent("com.iitb.interactiveclassroom.VIEWHISTORY");
 	      	   intr.putStringArrayListExtra("doubtt",ViewHistory.doubt2);
 			   intr.putStringArrayListExtra("textMessage", ViewHistory.textMessage2);
 			

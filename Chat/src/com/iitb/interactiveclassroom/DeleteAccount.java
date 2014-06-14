@@ -1,13 +1,10 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 
-
-import java.io.File;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -22,9 +19,9 @@ public class DeleteAccount extends Activity
 	ListView listView;
 	
 	@Override
-	protected void onCreate(Bundle babarockes) {
+	protected void onCreate(Bundle bundle) {
 		// TODO Auto-generated method stub
-		super.onCreate(babarockes);
+		super.onCreate(bundle);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.delete_account);
 		
@@ -93,7 +90,7 @@ public class DeleteAccount extends Activity
 	{
 	        
 	        	
-	        	Intent startMain = new Intent(DeleteAccount.this,FirstMainActivity.class);
+	        	Intent startMain = new Intent(DeleteAccount.this,Users.class);
 	            startMain.addCategory(Intent.CATEGORY_HOME);
 	            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	            startMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

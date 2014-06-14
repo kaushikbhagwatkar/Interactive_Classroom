@@ -1,7 +1,6 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,7 +21,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,10 +30,16 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.*;
+import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.*;
-import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Login extends FragmentActivity
 {
@@ -56,9 +62,9 @@ public class Login extends FragmentActivity
 	
 	
 	@Override
-	protected void onCreate(Bundle babaji) {
+	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		super.onCreate(babaji);
+		super.onCreate(savedInstanceState);
 		
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -425,7 +431,7 @@ public class Login extends FragmentActivity
 	    @Override
 	    public void onBackPressed() {
 	       
-	        startActivity(new Intent(Login.this,FirstMainActivity.class));
+	       /* startActivity(new Intent(Login.this,Users.class));*/
 	        finish();
 	    }
 

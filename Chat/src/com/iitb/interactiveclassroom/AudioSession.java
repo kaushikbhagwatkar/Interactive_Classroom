@@ -1,4 +1,4 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 
 import static android.media.MediaRecorder.AudioSource.MIC;
 import static android.media.MediaRecorder.AudioSource.VOICE_COMMUNICATION;

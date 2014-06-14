@@ -1,25 +1,17 @@
-package com.baba.chat;
+package com.iitb.interactiveclassroom;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.Toast;
-import android.view.View.OnClickListener;
 
 public class ViewHistory extends Activity {
 static String[] doubt;
