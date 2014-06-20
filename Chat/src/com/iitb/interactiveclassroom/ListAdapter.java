@@ -31,6 +31,7 @@ private final String[] textMessage;
 Context cx;
 Socket socket;
 String macid;
+String dbt,txt;
 DataInputStream dis;
 DataOutputStream dos;
 //private final Integer[] imageId;
@@ -81,6 +82,8 @@ delete.setOnClickListener(new OnClickListener(){
 	        adb.setMessage("Are you sure you want to delete " +position);
 
 	        final int positionToRemove = position;
+	        dbt=ViewHistory.doubt2.get(positionToRemove);
+	        txt=ViewHistory.textMessage2.get(positionToRemove);
 	        adb.setNegativeButton("Cancel", null);
 	       
 	        try{
@@ -121,9 +124,9 @@ delete.setOnClickListener(new OnClickListener(){
 						dos.writeUTF(AudioMainActivity.macadd);
 						
 				    
-						dos.writeUTF(ViewHistory.doubt2.get(positionToRemove)); // SEND
+						dos.writeUTF(dbt); // SEND
 																		// SUBJECT
-						dos.writeUTF(ViewHistory.textMessage2.get(positionToRemove)); // SEND
+						dos.writeUTF(txt); // SEND
 						
 
 					}

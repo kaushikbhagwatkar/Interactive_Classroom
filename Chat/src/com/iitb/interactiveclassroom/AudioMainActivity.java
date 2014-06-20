@@ -35,7 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class AudioMainActivity extends Activity implements OnClickListener {
-
+	static String topicname=null;
 	Socket s, socket;
 	BufferedReader br;
 	PrintWriter pw;
@@ -193,11 +193,47 @@ else if (item.getItemId()==R.id.action_logout){
 				  break;
 			
 		case R.id.audio_doubt_button:
-			confirm = new Intent(AudioMainActivity.this, AudioDoubt.class); // START
-																		// AUDIO
-																		// DOUBT
-																		// SESSION
-			startActivity(confirm);
+			
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+			alert.setTitle("Topic Name");
+			alert.setMessage("Topic:");
+
+			// Set an EditText view to get user input 
+			final EditText input = new EditText(this);
+			alert.setView(input);
+
+			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			  topicname = input.getText().toString();
+			  if (topicname!=null)
+				{
+				confirm = new Intent(AudioMainActivity.this, AudioDoubt.class); // START
+				  confirm.addCategory(Intent.CATEGORY_HOME);
+		           // startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		            confirm.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);															// SESSION
+				startActivity(confirm);
+				finish();
+				
+				}
+				
+				else
+				{
+					Toast.makeText(getBaseContext(), "Please Fill the Topic Field", Toast.LENGTH_SHORT).show();
+				}
+			  
+			  }
+			});
+
+			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			  public void onClick(DialogInterface dialog, int whichButton) {
+			    // Canceled.
+			  }
+			});
+
+			alert.show();
+			
+			
 			break;
 		}
 	}
@@ -269,7 +305,8 @@ else if (item.getItemId()==R.id.action_logout){
 						Log.d("mohit", "roll="+TestConnection.roll);
 						
 						//	if(TestConnection.macid!=null)
-						dos.writeUTF(getMacAddress());
+						macadd=getMacAddress();
+						dos.writeUTF(macadd);
 						Log.d("mohit", "macid="+getMacAddress());
 							
 				    

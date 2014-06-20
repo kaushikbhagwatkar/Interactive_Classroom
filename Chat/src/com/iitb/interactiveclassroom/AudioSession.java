@@ -25,7 +25,7 @@ public class AudioSession {
 	private int encodingFormat=AudioFormat.ENCODING_PCM_16BIT;
 	int minBufSize=AudioRecord.getMinBufferSize(sampleRate,channelConfig,encodingFormat)+4096;
 	int bufferSize=0;
-	public String ipAddress="10.105.14.122";
+	public String ipAddress=TestConnection.ip;
 	private static final String IPV4_NUM       ="([01]?\\d\\d?|2[0-4]\\d|25[0-5])";		//REGULAR EXPRESSION FOR IP NUM
 	private static final String IP_DOT         ="\\.";
 	private static final String IPV4_PATTERN   ="^"+IPV4_NUM+IP_DOT+IPV4_NUM+IP_DOT+IPV4_NUM+IP_DOT+IPV4_NUM+"$";	
@@ -50,7 +50,9 @@ public class AudioSession {
 		//if(!isValidIPAddressAndPort(ipAddress,port)) return;	//CHECK FOR VALID IP AND PORT
 		//recordButton.setEnabled(false);
 		//recordButton.setText("");
-		//Log.e("startStreaming", "inStream");
+		//
+		
+		Log.e("startStreaming", "inStream");
 		new Thread(new Runnable(){
 			@Override
 			public
@@ -60,21 +62,27 @@ public class AudioSession {
 					byte[] buffer=new byte[minBufSize];
 					DatagramPacket packet;
 					final InetAddress destination=InetAddress.getByName(ipAddress);
-					//Log.e("before recorder", "about to initialize");
+					Log.e("before recorder", "about to initialize");
 					recorder=new AudioRecord(VOICE_COMMUNICATION,sampleRate,channelConfig,encodingFormat,minBufSize*10);	//INITIALIZE RECORDER
+					Log.e("before recorder", "about to initialize");
 					//test starts
 			
 					
 					//test ends
 					if(recorder.getState()==AudioRecord.STATE_INITIALIZED)	//CHECK IF RECORDER INITIALIZED
+						{
+						Log.e(" recorder", "recorder is initialized");
 						recorder.startRecording();
+						}
 					else
 						Log.e("not initialized","kuch aur kar");
 					
 					while(isRecording){		//KEEP ON RECORDING IN PARALLEL UNTILL STOP STREAMING IS CALLED
+						Log.e("recorder", "recorder is recording");
 						bufferSize=recorder.read(buffer,0,buffer.length);
 						packet=new DatagramPacket(buffer,buffer.length,destination,port);
 						socket.send(packet);
+						Log.e("packet: ", "packet send");
 					}
 				}
 				catch(Exception e){
