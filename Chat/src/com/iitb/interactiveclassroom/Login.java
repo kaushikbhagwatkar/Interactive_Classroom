@@ -240,6 +240,25 @@ public class Login extends FragmentActivity
 	        			 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
 	        		 }
 					
+					
+					///// creating thumbnail...
+					try{
+					File thinput=new File(currentPath+"dp.jpg");
+					FileInputStream thfis = new FileInputStream(thinput);
+		            Bitmap imageBitmap = BitmapFactory.decodeStream(thfis);
+		            FileOutputStream thoutput = new FileOutputStream(currentPath+"dp_th.jpg");
+		            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 25, thoutput);
+		            thoutput.close();
+		            
+					}
+					
+					catch(Exception e)
+					{
+						Log.e("Error Compressing",e.toString());
+					}
+					
+					
+					
 					// Copying ended
 				
 				

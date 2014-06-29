@@ -28,7 +28,18 @@ static Context context;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    
+
+	if (AudioMainActivity.count==5)
+	{
+		setContentView(R.layout.nohistory);
+	}
+	
+    
+    else
+    {
     setContentView(R.layout.main);
+    
 //doubt2=getIntent().getExtras().getStringArrayList("doubt");
 //textMessage2=getIntent().getExtras().getStringArrayList("textMessage");
  //   if(savedInstanceState==null){
@@ -125,6 +136,7 @@ try{
 			list.setScrollingCacheEnabled(false);
 
     }		
+  }
 
 public static void dofunction(){
 	

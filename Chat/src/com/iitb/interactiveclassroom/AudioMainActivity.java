@@ -12,10 +12,12 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.wifi.WifiInfo;
@@ -23,6 +25,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,11 +34,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class AudioMainActivity extends Activity implements OnClickListener {
 	static String topicname=null;
+	static int imageflag=0;
+	static int mainback=0;
+	int textsent;
+	static int pingflag=1;
 	Socket s, socket;
 	BufferedReader br;
 	PrintWriter pw;
@@ -53,7 +61,8 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 	Button sendDoubtText,viewHistory;;
 	DataInputStream dis;
 	DataOutputStream dos;
-	public static int count;
+	ProgressBar bar;
+	public static int count=5;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,8 +86,8 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 		dpaudio.setImageBitmap(bmp);
 		
 		hiname.setText("  Hi "+TestConnection.username+" !!  ");
-	
-	
+		
+		
 	
 	}
 
@@ -91,7 +100,8 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 		hiname=(TextView)findViewById(R.id.hi_name);
 		viewHistory = (Button) findViewById(R.id.view_history);
 		counter=(TextView)findViewById(R.id.counter);
-		
+		bar=(ProgressBar)findViewById(R.id.progressBar2);
+		bar.setVisibility(View.GONE);
 		
 	}
 
@@ -137,6 +147,8 @@ else if (item.getItemId()==R.id.action_logout){
 		
 		finish();
 		*/
+	pingflag=0;
+	imageflag=0;
 	Intent startMain = new Intent(AudioMainActivity.this,Users.class);
     startMain.addCategory(Intent.CATEGORY_HOME);
     //startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -149,8 +161,6 @@ else if (item.getItemId()==R.id.action_logout){
 		
 	}
 	
-	
-	
 	return super.onOptionsItemSelected(item);
 }
 
@@ -161,6 +171,9 @@ else if (item.getItemId()==R.id.action_logout){
 		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
 		case R.id.send_text_doubt:
+			
+			
+			
 			textMsg = doubtText.getText().toString(); // READ MESSAGE
 			textSubject = doubtSubject.getText().toString(); // READ SUBJECT
 			if (textMsg.isEmpty() || textSubject.isEmpty()) { // CHECK IF ANY OF
@@ -169,7 +182,32 @@ else if (item.getItemId()==R.id.action_logout){
 				Toast.makeText(AudioMainActivity.this, "All fields are mandatory",
 						Toast.LENGTH_LONG).show();
 			} else {
+				
+				if(count!=0)
 				createDialog(); // CREATE A CONFIRMATION DIALOG
+				
+				else
+				{
+					final Dialog dialog = new Dialog(context);
+					dialog.setContentView(R.layout.kickdialog);
+					dialog.setTitle("Wait...");
+		 
+					// set the custom dialog components - text, image and button
+					TextView text = (TextView) dialog.findViewById(R.id.kicktext);
+					text.setText("Enough is Enough....");
+					Button dialogButton = (Button) dialog.findViewById(R.id.kickok);
+					// if button is clicked, close the custom dialog
+					dialogButton.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+							
+						}
+					});
+		 
+					dialog.show();
+				}
+				
 			}
 			break;
 		case R.id.view_history:
@@ -194,44 +232,55 @@ else if (item.getItemId()==R.id.action_logout){
 			
 		case R.id.audio_doubt_button:
 			
-			AlertDialog.Builder alert = new AlertDialog.Builder(this);
-
-			alert.setTitle("Topic Name");
-			alert.setMessage("Topic:");
-
-			// Set an EditText view to get user input 
 			final EditText input = new EditText(this);
-			alert.setView(input);
+			final AlertDialog d = new AlertDialog.Builder(context)
+	        .setView(input)
+	        .setTitle("Topic")
+	        .setMessage("Enter Topic :")
+	        .setPositiveButton(android.R.string.ok, null) //Set to null. We override the onclick
+	        .setNegativeButton(android.R.string.cancel, null)
+	        .create();
 
-			alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-			  topicname = input.getText().toString();
-			  if (topicname!=null)
-				{
-				confirm = new Intent(AudioMainActivity.this, AudioDoubt.class); // START
-				  confirm.addCategory(Intent.CATEGORY_HOME);
-		           // startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		            confirm.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);															// SESSION
-				startActivity(confirm);
-				finish();
-				
-				}
-				
-				else
-				{
-					Toast.makeText(getBaseContext(), "Please Fill the Topic Field", Toast.LENGTH_SHORT).show();
-				}
-			  
-			  }
-			});
+	d.setOnShowListener(new DialogInterface.OnShowListener() {
 
-			alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-			  public void onClick(DialogInterface dialog, int whichButton) {
-			    // Canceled.
-			  }
-			});
+	    @Override
+	    public void onShow(DialogInterface dialog) {
 
-			alert.show();
+	        Button b = d.getButton(AlertDialog.BUTTON_POSITIVE);
+	        b.setOnClickListener(new View.OnClickListener() {
+
+	            @Override
+	            public void onClick(View view) {
+	                // TODO Do something
+	            	topicname = input.getText().toString();
+	  			  if (!topicname.equals(""))
+	  				{Log.e("Topic is",topicname);
+	  				confirm = new Intent(AudioMainActivity.this, AudioDoubt.class); // START
+	  				  confirm.addCategory(Intent.CATEGORY_HOME);
+	  		           // startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	  		            confirm.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);															// SESSION
+	  				startActivity(confirm);
+	  				//finish();
+	  			//Dismiss once everything is OK.
+	                d.dismiss();
+	  				
+	  				} 
+	  				
+	  				else
+	  				{
+	  					Toast.makeText(getBaseContext(), "Please Fill the Topic Field", Toast.LENGTH_SHORT).show();
+	  					
+	  				}
+	            	
+	            	
+	                
+	            }
+	        });
+	    }
+	});
+			
+			d.show();
+			
 			
 			
 			break;
@@ -241,6 +290,7 @@ else if (item.getItemId()==R.id.action_logout){
 	private void createDialog() {
 		// TODO Auto-generated method stub
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		
 		builder.setIcon(R.drawable.ic_launcher);
 		builder.setTitle("Submit this message?");
 		builder.setMessage("Subject:- " + textSubject + "\nDoubt:- \n"
@@ -254,39 +304,55 @@ else if (item.getItemId()==R.id.action_logout){
 		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
 				Log.e("yes", "yes");
-				count++;
-				if(count<=5)
+			//	count++;
+				count=5-doubt.size();
+				if(count<=5 && count>0)
 					{	
-				doubt.add(doubtSubject.getText().toString());
-				textMessage.add(doubtText.getText().toString());
 				
-				counter.setText("Doubts Remaining : "+(5-count));
+				
+				//Setting progressbar//
+				
+				runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						bar.setVisibility(View.VISIBLE);
+						sendDoubtText.setVisibility(View.GONE);
+						doubtSubject.setEnabled(false);
+						doubtText.setEnabled(false);
 						
 						
+						
+					}
+				});
+				
+				
+				
 						sendTextRequest();
+						
 					}
 				else
-					counter.setText("Doubts Remaining : 0");
-				
+					{counter.setText("Doubts Remaining : 0");
+					}
 					// SEND DOUBT IF YES IS CLICKED
 				}});
 		AlertDialog alert = builder.create(); // CREATE ALERT DIALOG
 		alert.show();
+		alert.setCanceledOnTouchOutside(false);
 	}
 
 	private void sendTextRequest() {
-		// TODO Auto-generated method stub
-
-		Toast.makeText(getBaseContext(), "Sending...", Toast.LENGTH_LONG)
-				.show();
-		// public class ClientThread implements Runnable {
-		new Thread() {
-
+		
+				//MESSAGE SENDING THREAD STARTED
+		final Thread textingThread = new Thread (new Runnable() {
+			
+			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 
 				try {
-
+						textsent=0;
 						socket = new Socket(TestConnection.ip, TestConnection.port);
 
 					// Log.e("ClientActivity", "C: Sending command.");
@@ -299,46 +365,84 @@ else if (item.getItemId()==R.id.action_logout){
 				    
 				//  	if(TestConnection.username!=null)
 						dos.writeUTF(TestConnection.username);
-						Log.d("mohit", "uname="+TestConnection.username);
-						//	if(TestConnection.roll!=null)
 						dos.writeUTF(TestConnection.roll);
-						Log.d("mohit", "roll="+TestConnection.roll);
-						
-						//	if(TestConnection.macid!=null)
 						macadd=getMacAddress();
 						dos.writeUTF(macadd);
-						Log.d("mohit", "macid="+getMacAddress());
-							
-				    
+						
 						dos.writeUTF(doubtSubject.getText().toString()); // SEND
-						Log.d("mohit", "doubtsub="+doubtSubject.getText().toString());
 																		// SUBJECT
 						dos.writeUTF(doubtText.getText().toString()); // SEND
-						Log.d("mohit", "doubtText="+doubtText.getText().toString());
+						
 																// MESSAGE
-						//	pw.println(getMacAddress()); // SEND MAC ID
+						
+						// Sending imageflag
 						
 						
 						//Image sending
-						File filedp = new File(path+"/dp.jpg");
+						if(imageflag!=1)
+						{
+							dos.writeUTF("send_image");
+							Log.e("Image flag sent","send_image");
+							
+							imageflag=1;
+						File filedp = new File(path+"/dp_th.jpg");
 						sendFile(filedp);
-
-						String msgServer = dis.readUTF(); // RECEIVE
-						Log.d("mohit", "msgServer="+msgServer);
+						}
+						
+						else
+						{dos.writeUTF("not_send_image");
+						Log.e("Image flag sent","not_send_image");
+						String ifdone =dis.readUTF();
+						
+						if(ifdone.equals("not_done"))
+						{
+							File filedp = new File(path+"/dp_th.jpg");
+							sendFile(filedp);
+							Log.e("ZABARDASTI","Image Sent");
+						}
+						
+							
+						}
+						
+						final String msgServer = dis.readUTF(); // RECEIVE
+						Log.e("Confirmation", "msgServer="+msgServer);
 														// CONFIRMATION
 														// IF MESSAGE
 														// RECEIVED BY
 														// SERVER
 				    	
-						if (msgServer.contains("received")) {
-							Toast.makeText(AudioMainActivity.this, "Doubt Sent",
-								Toast.LENGTH_SHORT).show();
-						} 
-						else {
-						Toast.makeText(AudioMainActivity.this,
-								"Server Error! Doubt not sent!",
-								Toast.LENGTH_SHORT).show();
-						}
+						
+						runOnUiThread(new Runnable() {
+							
+							@Override
+							public void run() {
+								// TODO Auto-generated method stub
+								if (msgServer.contains("received")) {
+									Toast.makeText(AudioMainActivity.this, "Doubt Sent",
+										Toast.LENGTH_SHORT).show();
+									bar.setVisibility(View.GONE);
+									sendDoubtText.setVisibility(View.VISIBLE);
+									textsent=1;
+									
+									doubt.add(doubtSubject.getText().toString());
+									textMessage.add(doubtText.getText().toString());
+									count=5-doubt.size();
+									counter.setText("Doubts Remaining : "+count);
+									
+									
+								} 
+								else {
+								Toast.makeText(AudioMainActivity.this,
+										"Server Error! Doubt not sent!",
+										Toast.LENGTH_SHORT).show();
+								}
+								doubtSubject.setText("");
+								doubtText.setText("");
+								doubtSubject.setEnabled(true);
+								doubtText.setEnabled(true);
+							}
+						});
+						
 					}
 					catch (Exception e) {
 					e.printStackTrace();
@@ -356,10 +460,82 @@ else if (item.getItemId()==R.id.action_logout){
 					}
 				}
 
-			}// End run
-
-		}.start();		//MESSAGE SENDING THREAD STARTED
+			}
+		});
+		
+		textingThread.start();
+		
+		Thread textTimer=new Thread (new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				
+				long startingtime = System.currentTimeMillis();
+				long endingtime = startingtime + 5*1000; // 60 seconds * 1000 ms/sec
+				
+				while (true)
+				{
+					if(textsent==1||System.currentTimeMillis() > endingtime)
+					{
+						if(textsent!=1)
+						{
+							textingThread.interrupt();
+							Log.e("Texting thread","Thread Interrupted");
+							runOnUiThread(new Runnable() {
+								
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+								
+									bar.setVisibility(View.GONE);
+									sendDoubtText.setVisibility(View.VISIBLE);
+									Toast.makeText(getApplicationContext(), "Connection Error... Could not Send Doubt..", Toast.LENGTH_SHORT).show();
+									doubtSubject.setEnabled(true);
+									doubtText.setEnabled(true);
+									
+									
+								}
+							});
+							
+							
+							
+							
+							
+							break;
+						}
+						
+						
+						else
+						{
+							break;
+						}
+						
+					}
+			
+					
+					
+				}
+				
+				
+				
+			}
+		});
+		
+		textTimer.start();
+		
+		
+		
+		
+		
+		
+		
+		
 	}
+	
+	
+	
+	
 	public void sendFile(File file) throws IOException {
         FileInputStream fileIn = new FileInputStream(file);
         byte[] buf = new byte[Short.MAX_VALUE];
@@ -397,7 +573,7 @@ else if (item.getItemId()==R.id.action_logout){
 			    		
 			    		finish();
 			    		*/
-			        	
+			        	imageflag=0;
 			        	Intent startMain = new Intent(AudioMainActivity.this,Users.class);
 			            startMain.addCategory(Intent.CATEGORY_HOME);
 			           // startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -430,7 +606,28 @@ else if (item.getItemId()==R.id.action_logout){
 		 
 	    }
 	
-	
+	 
+	 @Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		Log.e("MainAudioText","onPausecalled");
+		 mainback=1;
+		 super.onPause();
+	}
+	 
+	 @Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		 Log.e("MainAudioText","onResumecalled");
+		 mainback=0;
+		 super.onResume();
+	}
+	 
+	 @Override
+		public void onConfigurationChanged(Configuration newConfig) {
+			// TODO Auto-generated method stub
+			super.onConfigurationChanged(newConfig);
+		};
 
 }
 

@@ -25,6 +25,20 @@
         android:icon="@drawable/mic_logo_small"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+       
+        <activity
+            android:name="com.iitb.interactiveclassroom.DummyActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="landscape" 
+            >
+            <intent-filter>
+                <action android:name="com.iitb.interactiveclassroom.DUMMYACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+       
+        
         <activity
             android:name="com.iitb.interactiveclassroom.ViewHistory"
             android:label="@string/app_name"
@@ -37,8 +51,11 @@
         </activity>
         <activity
             android:name="com.iitb.interactiveclassroom.AudioMainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape"
+          android:launchMode="singleTop"
+             >
             <intent-filter>
                 <action android:name="com.iitb.interactiveclassroom.AUDIOMAINACTIVITY" />
 
@@ -47,6 +64,8 @@
         </activity>
         <activity
             android:name="com.iitb.interactiveclassroom.AudioDoubt"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+           
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.DeviceDefault.Dialog.NoActionBar" >

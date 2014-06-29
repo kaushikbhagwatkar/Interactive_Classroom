@@ -79,7 +79,7 @@ delete.setOnClickListener(new OnClickListener(){
 		final Context context=getContext();
 			AlertDialog.Builder adb=new AlertDialog.Builder(context);
 	        adb.setTitle("Delete?");
-	        adb.setMessage("Are you sure you want to delete " +position);
+	        adb.setMessage("Are you sure you want to cancel this doubt?");
 
 	        final int positionToRemove = position;
 	        dbt=ViewHistory.doubt2.get(positionToRemove);
@@ -164,8 +164,12 @@ delete.setOnClickListener(new OnClickListener(){
 	            	ViewHistory.textMessage2.remove(positionToRemove);
 	            	AudioMainActivity.doubt.remove(positionToRemove);
 	            	AudioMainActivity.textMessage.remove(positionToRemove);
-	            	AudioMainActivity.count--;
-	            	AudioMainActivity.counter.setText("count remaining:"+(5-AudioMainActivity.count));
+	            	AudioMainActivity.count=5-AudioMainActivity.doubt.size();
+	            	Log.d("mohit","doubt size="+AudioMainActivity.doubt.size());
+	            	Log.d("mohit","doubt count="+AudioMainActivity.count);
+	            	
+	            	//AudioMainActivity.count--;
+	            	AudioMainActivity.counter.setText("Doubt remaining:"+(AudioMainActivity.count));
 	            	ViewHistory.doubt=new String[ViewHistory.doubt2.size()];
 	            	ViewHistory.textMessage=new String[ViewHistory.textMessage2.size()];
 	            }
@@ -202,34 +206,6 @@ delete.setOnClickListener(new OnClickListener(){
 	            
 
 	            
-	            
-	            
-	            
-	            
-	            
-	            
-
-	        	
-	        	
-	        	
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
-	            
 	            context2.finish();
 	            
 	            }
@@ -258,24 +234,6 @@ delete.setOnClickListener(new OnClickListener(){
 
 return rowView;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

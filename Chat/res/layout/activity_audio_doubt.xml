@@ -9,13 +9,24 @@
 
     <!-- DISPLAY MESSAGES LIKE 'YOU ARE IN THE WAITING QUEUE/ ACTIVE QUEUE / ITS YOUR TURN -->
 
+    <ImageView
+        android:id="@+id/minimizeButton"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:src="@drawable/etextgray" />
+
     <TextView
         android:id="@+id/state"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="42dp"
-        android:layout_weight="2"
-        android:text="@string/hello_world"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="3"
+        android:text="Hello User"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/black" />
 
@@ -25,14 +36,15 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:layout_weight="4" android:paddingBottom="10dp" >
+        android:layout_weight="8"
+        android:paddingBottom="10dp" >
 
         <TextView
             android:id="@+id/queue_pos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Queue Pos"
+            android:text="Waiting for Position..."
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/black"
             android:visibility="visible" />
@@ -52,8 +64,8 @@
         android:id="@+id/cancel_request"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="30dp"
-        android:layout_weight="2"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="4"
         android:src="@drawable/disconnect" />
 
 </LinearLayout>

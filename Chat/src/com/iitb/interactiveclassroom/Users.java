@@ -259,6 +259,7 @@ public class Users extends Activity {
 
 				final Dialog dialog = new Dialog(Users.this);
 				dialog.setContentView(R.layout.dialog);
+				dialog.setCanceledOnTouchOutside(false);
 				dialog.setTitle("Enter Password");
 
 				// set the custom dialog components - text, image and button
@@ -266,6 +267,8 @@ public class Users extends Activity {
 						.findViewById(R.id.dgpasstext);
 				final EditText passd = (EditText) dialog
 						.findViewById(R.id.dgpassedit);
+				passd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+				
 				final TextView dobt = (TextView) dialog
 						.findViewById(R.id.dobtext);
 				final TextView dobe = (TextView) dialog.findViewById(R.id.dob);
@@ -283,7 +286,7 @@ public class Users extends Activity {
 						// TODO Auto-generated method stub
 						dobt.setVisibility(View.VISIBLE);
 						dobe.setVisibility(View.VISIBLE);
-
+						passd.setInputType(InputType.TYPE_CLASS_TEXT );
 						dialog.setTitle("Forgot Password");
 						dobt.setText("Date Of Birth");
 						textd.setText("Roll No.");
