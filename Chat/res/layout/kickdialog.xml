@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="You Are Kicked By The Professor..."
+        android:text="You Are Removed From The Waiting List...\nBetter Luck Next Time!!!"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#6E6E6E"
         android:textStyle="italic" />

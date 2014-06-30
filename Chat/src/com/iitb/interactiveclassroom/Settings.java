@@ -106,6 +106,7 @@ inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
 				
 				Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_SHORT).show();
 				e1.setEnabled(false);
+				TestConnection.ip=newadd;
 				
 				
 				

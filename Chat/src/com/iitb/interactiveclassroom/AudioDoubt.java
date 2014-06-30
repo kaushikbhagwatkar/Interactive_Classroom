@@ -422,7 +422,7 @@ public class AudioDoubt extends Activity implements OnClickListener {
 									
 									// set the custom dialog components - text, image and button
 									TextView text = (TextView) dialog.findViewById(R.id.kicktext);
-									text.setText("Enough is Enough....");
+									text.setText("You already have 5 doubts in queue....");
 									Button dialogButton = (Button) dialog.findViewById(R.id.kickok);
 									// if button is clicked, close the custom dialog
 									dialogButton.setOnClickListener(new OnClickListener() {

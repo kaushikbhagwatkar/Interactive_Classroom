@@ -69,7 +69,7 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.activity_main_audiotext);
 		init(); // INITIALIZING VARIABLES
-		
+		pingflag=1;
 		viewHistory.setOnClickListener(this); //LISTENER FOR VIEW HISTORY BUTTON
 		
 		path=Environment.getExternalStorageDirectory().toString()+"/AakashApp/"+TestConnection.username;
@@ -86,6 +86,49 @@ public class AudioMainActivity extends Activity implements OnClickListener {
 		dpaudio.setImageBitmap(bmp);
 		
 		hiname.setText("  Hi "+TestConnection.username+" !!  ");
+		
+		
+		Thread updater=new Thread (new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Log.e("UPDATER","Updater thread started");
+				while (pingflag==1)
+				{
+					
+					try{Thread.sleep(500);
+					
+				runOnUiThread(new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+					
+						if(counter!=null)
+						{
+							counter.setText("Doubts Remaining : "+count );
+						}
+						
+						
+					}
+				});
+				
+					}
+					
+					catch(Exception e){}
+				
+				
+					
+				}
+				Log.e("UPDATER","Updater thread stopped");
+				
+			}
+		});
+		updater.start();
+		
+		
+		
 		
 		
 	
@@ -156,8 +199,9 @@ else if (item.getItemId()==R.id.action_logout){
     startActivity(startMain);
     Toast.makeText(getApplicationContext(), "Logged out Successfully", Toast.LENGTH_SHORT).show();
     finish();
-	
-	
+	doubt.removeAll(doubt);
+	textMessage.removeAll(textMessage);
+	count=5;
 		
 	}
 	
@@ -194,7 +238,7 @@ else if (item.getItemId()==R.id.action_logout){
 		 
 					// set the custom dialog components - text, image and button
 					TextView text = (TextView) dialog.findViewById(R.id.kicktext);
-					text.setText("Enough is Enough....");
+					text.setText("You Already have 5 doubts in queue....");
 					Button dialogButton = (Button) dialog.findViewById(R.id.kickok);
 					// if button is clicked, close the custom dialog
 					dialogButton.setOnClickListener(new OnClickListener() {
@@ -574,6 +618,7 @@ else if (item.getItemId()==R.id.action_logout){
 			    		finish();
 			    		*/
 			        	imageflag=0;
+			        	pingflag=0;
 			        	Intent startMain = new Intent(AudioMainActivity.this,Users.class);
 			            startMain.addCategory(Intent.CATEGORY_HOME);
 			           // startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -582,7 +627,10 @@ else if (item.getItemId()==R.id.action_logout){
 			            Toast.makeText(getApplicationContext(), "Logged out Successfully", Toast.LENGTH_SHORT).show();
 			            finish();
 			        	
-			        	
+
+			        	doubt.removeAll(doubt);
+			        	textMessage.removeAll(textMessage);
+			        	count=5;
 			            break;
 
 			        case DialogInterface.BUTTON_NEGATIVE:
